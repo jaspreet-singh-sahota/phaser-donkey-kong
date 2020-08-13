@@ -16,7 +16,7 @@
   "bugs": {
     "url": "https://github.com/jaspreet-singh-sahota/phaser-donkey-kong/issues"
   },
-  "homepage": "https://github.com/jaspreet-singh-sahota/phaser-donkey-kong#readme"
+  "homepage": "https://github.com/jaspreet-singh-sahota/phaser-donkey-kong#readme",
   "devDependencies": {
     "clean-webpack-plugin": "^3.0.0",
     "css-loader": "^4.2.1",
