@@ -62,6 +62,15 @@ gameScene.create = function () {
     repeat: -1
   });
 
+  // fire animation
+  this.anims.create({
+    key: 'burning',
+    frames: this.anims.generateFrameNames('fire', {
+      frames: [0, 1]
+    }),
+    frameRate: 4,
+    repeat: -1
+  });
 
   // player
   this.player = this.add.sprite(180, 400, 'player', 3);
