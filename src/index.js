@@ -40,6 +40,10 @@ gameScene.create = function () {
   this.platforms.add(platform);
 
 
+  // player
+  this.player = this.add.sprite(180, 400, 'player', 3);
+  this.physics.add.existing(this.player);
+
   // disable gravity
   //ground.body.allowGravity = false;
 
