@@ -70,6 +70,44 @@ gameScene.create = function () {
   // collision detection
   //this.physics.add.collider(ground, ground2);
   this.physics.add.collider(this.player, this.platforms);
+
+  // enable cursor keys
+  this.cursors = this.input.keyboard.createCursorKeys();
+};
+
+// executed on every frame
+gameScene.update = function () {
+  // movement to the left
+  if (this.cursors.left.isDown) {
+    this.player.body.setVelocityX(-this.playerSpeed);
+
+    this.player.flipX = false;
+
+    // play animation if none is playing
+    if (!this.player.anims.isPlaying)
+      this.player.anims.play('walking');
+  }
+
+  // movement to the right
+  else if (this.cursors.right.isDown) {
+    this.player.body.setVelocityX(this.playerSpeed);
+
+    this.player.flipX = true;
+
+    // play animation if none is playing
+    if (!this.player.anims.isPlaying)
+      this.player.anims.play('walking');
+  }
+  else {
+    // make the player stop
+    this.player.body.setVelocityX(0);
+
+    // stop walking animation
+    this.player.anims.stop('walking');
+
+    // set default frame
+    this.player.setFrame(3);
+  }
 };
 
 let config = {
