@@ -27,6 +27,8 @@ gameScene.preload = function () {
     margin: 1,
     spacing: 1
   });
+
+  this.load.json('levelData', 'assets/json/levelData.json');
 };
 
 gameScene.create = function () {
@@ -36,15 +38,18 @@ gameScene.create = function () {
   this.physics.world.bounds.height = 700;
   
   this.platforms = this.add.group();
-  // ground
-  let ground = this.add.sprite(180, 604, 'ground');
-  this.physics.add.existing(ground, true);
-  this.platforms.add(ground);
+  // // ground
+  // let ground = this.add.sprite(180, 604, 'ground');
+  // this.physics.add.existing(ground, true);
+  // this.platforms.add(ground);
 
-  // platform
-  let platform = this.add.tileSprite(180, 500, 4 * 36, 1 * 30, 'block');
-  this.physics.add.existing(platform, true);
-  this.platforms.add(platform);
+  // // platform
+  // let platform = this.add.tileSprite(180, 500, 4 * 36, 1 * 30, 'block');
+  // this.physics.add.existing(platform, true);
+  // this.platforms.add(platform);
+
+  // add all level elements
+  this.setupLevel();
 
   // walking animation
   this.anims.create({
@@ -80,6 +85,10 @@ gameScene.create = function () {
 
   // enable cursor keys
   this.cursors = this.input.keyboard.createCursorKeys();
+
+  this.input.on('pointerdown', function (pointer) {
+    console.log(pointer.x, pointer.y);
+  });
 };
 
 // executed on every frame
@@ -131,6 +140,40 @@ gameScene.update = function () {
     // change frame
     this.player.setFrame(2);
   }
+};
+
+// sets up all the elements in the level
+gameScene.setupLevel = function () {
+  this.platforms = this.add.group();
+
+  // parse json data
+  this.levelData = this.cache.json.get('levelData');
+
+  // create all the platforms
+  for (let i = 0; i < this.levelData.platforms.length; i++) {
+    let curr = this.levelData.platforms[i];
+
+    let newObj;
+
+    // create object
+    if (curr.numTiles == 1) {
+      // create sprite
+      newObj = this.add.sprite(curr.x, curr.y, curr.key).setOrigin(0);
+    }
+    else {
+      // create tilesprite
+      let width = this.textures.get(curr.key).get(0).width;
+      let height = this.textures.get(curr.key).get(0).height;
+      newObj = this.add.tileSprite(curr.x, curr.y, curr.numTiles * width, height, curr.key).setOrigin(0);
+    }
+
+    // enable physics
+    this.physics.add.existing(newObj, true);
+
+    // add to the group
+    this.platforms.add(newObj);
+  }
+
 };
 
 let config = {
