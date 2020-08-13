@@ -1,3 +1,5 @@
+import './styles/style.css';
+
 let gameScene = new Phaser.Scene('Game');
 
 gameScene.init = function () { };
