@@ -30,8 +30,12 @@ gameScene.preload = function () {
 };
 
 gameScene.create = function () {
+  
+  // world bounds
+  this.physics.world.bounds.width = 360;
+  this.physics.world.bounds.height = 700;
+  
   this.platforms = this.add.group();
-
   // ground
   let ground = this.add.sprite(180, 604, 'ground');
   this.physics.add.existing(ground, true);
@@ -58,6 +62,9 @@ gameScene.create = function () {
   this.player = this.add.sprite(180, 400, 'player', 3);
   this.physics.add.existing(this.player);
 
+  // constrain player to the game bounds
+  this.player.body.setCollideWorldBounds(true);
+
   // disable gravity
   //ground.body.allowGravity = false;
 
@@ -77,6 +84,9 @@ gameScene.create = function () {
 
 // executed on every frame
 gameScene.update = function () {
+  let onGround = this.player.body.blocked.down ||
+    this.player.body.touching.down;
+
   // movement to the left
   if (this.cursors.left.isDown) {
     this.player.body.setVelocityX(-this.playerSpeed);
