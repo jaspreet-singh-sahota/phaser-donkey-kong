@@ -2,7 +2,10 @@ import './styles/style.css';
 
 let gameScene = new Phaser.Scene('Game');
 
-gameScene.init = function () { };
+gameScene.init = function () {
+  this.playerSpeed = 150;
+  this.jumpSpeed = -600;
+};
 
 gameScene.preload = function () {
   this.load.image('ground', 'assets/images/ground.png');
@@ -38,6 +41,17 @@ gameScene.create = function () {
   let platform = this.add.tileSprite(180, 500, 4 * 36, 1 * 30, 'block');
   this.physics.add.existing(platform, true);
   this.platforms.add(platform);
+
+  // walking animation
+  this.anims.create({
+    key: 'walking',
+    frames: this.anims.generateFrameNames('player', {
+      frames: [0, 1, 2]
+    }),
+    frameRate: 12,
+    yoyo: true,
+    repeat: -1
+  });
 
 
   // player
