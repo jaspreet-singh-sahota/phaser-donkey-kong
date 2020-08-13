@@ -27,15 +27,31 @@ gameScene.preload = function () {
 };
 
 gameScene.create = function () {
+  this.platforms = this.add.group();
+
+  // ground
   let ground = this.add.sprite(180, 604, 'ground');
   this.physics.add.existing(ground, true);
-  
-  let ground2 = this.physics.add.sprite(180, 200, 'ground');
-  
-  // collision detection
-  this.physics.add.collider(ground, ground2);
-  
+  this.platforms.add(ground);
 
+  // platform
+  let platform = this.add.tileSprite(180, 500, 4 * 36, 1 * 30, 'block');
+  this.physics.add.existing(platform, true);
+  this.platforms.add(platform);
+
+
+  // disable gravity
+  //ground.body.allowGravity = false;
+
+  // make it immovable
+  //ground.body.immovable = true;
+
+  // 2) creating and adding sprites to the physics system
+  //let ground2 = this.physics.add.sprite(180, 200, 'ground');
+
+  // collision detection
+  //this.physics.add.collider(ground, ground2);
+  this.physics.add.collider(this.player, this.platforms);
 };
 
 let config = {
