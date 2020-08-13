@@ -72,9 +72,9 @@ gameScene.create = function () {
     repeat: -1
   });
 
-  // player
-  this.player = this.add.sprite(180, 400, 'player', 3);
-  this.physics.add.existing(this.player);
+  // // player
+  // this.player = this.add.sprite(180, 400, 'player', 3);
+  // this.physics.add.existing(this.player);
 
   // constrain player to the game bounds
   this.player.body.setCollideWorldBounds(true);
