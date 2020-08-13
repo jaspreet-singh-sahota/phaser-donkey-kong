@@ -26,7 +26,10 @@ gameScene.preload = function () {
   });
 };
 
-gameScene.create = function () { };
+gameScene.create = function () {
+
+
+};
 
 let config = {
   type: Phaser.AUTO,
@@ -34,7 +37,14 @@ let config = {
   height: 640,
   scene: gameScene,
   title: 'Monster Kong',
-  pixelArt: false
+  pixelArt: false,
+  physics: {
+    default: 'arcade',
+    arcade: {
+      gravity: { y: 1000 },
+      debug: true
+    }
+  }
 };
 
 let game = new Phaser.Game(config);
