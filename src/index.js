@@ -91,6 +91,7 @@ gameScene.create = function () {
   // collision detection
   //this.physics.add.collider(ground, ground2);
   this.physics.add.collider(this.player, this.platforms);
+  this.physics.add.collider(this.goal, this.platforms);
 
   // enable cursor keys
   this.cursors = this.input.keyboard.createCursorKeys();
@@ -182,6 +183,49 @@ gameScene.setupLevel = function () {
     // add to the group
     this.platforms.add(newObj);
   }
+
+  // create all the fire
+  this.fires = this.add.group();
+  for (let i = 0; i < this.levelData.fires.length; i++) {
+    let curr = this.levelData.fires[i];
+
+    let newObj = this.add.sprite(curr.x, curr.y, 'fire').setOrigin(0);
+
+    // enable physics
+    this.physics.add.existing(newObj);
+    newObj.body.allowGravity = false;
+    newObj.body.immovable = true;
+
+    // play burning animation
+    newObj.anims.play('burning');
+
+    // add to the group
+    this.fires.add(newObj);
+
+    // this is for level creation
+    newObj.setInteractive();
+    this.input.setDraggable(newObj);
+  }
+
+  // for level creation
+  this.input.on('drag', function (pointer, gameObject, dragX, dragY) {
+    gameObject.x = dragX;
+    gameObject.y = dragY;
+
+    console.log(dragX, dragY);
+
+  });
+
+  // player
+  this.player = this.add.sprite(this.levelData.player.x, this.levelData.player.y, 'player', 3);
+  this.physics.add.existing(this.player);
+
+  // constraint player to the game bounds
+  this.player.body.setCollideWorldBounds(true);
+
+  // goal
+  this.goal = this.add.sprite(this.levelData.goal.x, this.levelData.goal.y, 'goal');
+  this.physics.add.existing(this.goal);
 
 };
 
