@@ -94,7 +94,7 @@ gameScene.update = function () {
     this.player.flipX = false;
 
     // play animation if none is playing
-    if (!this.player.anims.isPlaying)
+    if (onGround && !this.player.anims.isPlaying)
       this.player.anims.play('walking');
   }
 
@@ -105,7 +105,7 @@ gameScene.update = function () {
     this.player.flipX = true;
 
     // play animation if none is playing
-    if (!this.player.anims.isPlaying)
+    if (onGround && !this.player.anims.isPlaying)
       this.player.anims.play('walking');
   }
   else {
@@ -116,7 +116,20 @@ gameScene.update = function () {
     this.player.anims.stop('walking');
 
     // set default frame
-    this.player.setFrame(3);
+    if (onGround)
+      this.player.setFrame(3);
+  }
+
+  // handle jumping
+  if (onGround && (this.cursors.space.isDown || this.cursors.up.isDown)) {
+    // give the player a velocity in Y
+    this.player.body.setVelocityY(this.jumpSpeed);
+
+    // stop the walking animation
+    this.player.anims.stop('walking');
+
+    // change frame
+    this.player.setFrame(2);
   }
 };
 
