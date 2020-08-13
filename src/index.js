@@ -27,12 +27,14 @@ gameScene.preload = function () {
 };
 
 gameScene.create = function () {
-
-  let ground = this.add.sprite(180, 400, 'ground');
-
-  this.physics.add.existing(ground);
-
+  let ground = this.add.sprite(180, 604, 'ground');
+  this.physics.add.existing(ground, true);
+  
   let ground2 = this.physics.add.sprite(180, 200, 'ground');
+  
+  // collision detection
+  this.physics.add.collider(ground, ground2);
+  
 
 };
 
