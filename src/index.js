@@ -22,11 +22,11 @@ gameScene.preload = function () {
   this.load.image('barrel', 'assets/images/barrel.png');
 
   // load spritesheets
-  this.load.spritesheet('player', 'assets/images/player_spritesheet.png', {
-    frameWidth: 28,
-    frameHeight: 30,
-    margin: 1,
-    spacing: 1
+  this.load.spritesheet('player', 'assets/images/player.png', {
+    frameWidth: 50.5,
+    frameHeight: 52,
+    margin: 2,
+    spacing: 2,
   });
 
   this.load.spritesheet('fire', 'assets/images/fire_spritesheet.png', {
@@ -47,7 +47,7 @@ gameScene.create = function () {
     this.anims.create({
       key: 'walking',
       frames: this.anims.generateFrameNames('player', {
-        frames: [0, 1, 2]
+        frames: [30, 31, 32, 33, 34, 35]
       }),
       frameRate: 12,
       yoyo: true,
@@ -96,7 +96,7 @@ gameScene.update = function () {
   if (this.cursors.left.isDown) {
     this.player.body.setVelocityX(-this.playerSpeed);
 
-    this.player.flipX = false;
+    this.player.flipX = true;
 
     // play animation if none is playing
     if (onGround && !this.player.anims.isPlaying)
@@ -107,7 +107,7 @@ gameScene.update = function () {
   else if (this.cursors.right.isDown) {
     this.player.body.setVelocityX(this.playerSpeed);
 
-    this.player.flipX = true;
+    this.player.flipX = false;
 
     // play animation if none is playing
     if (onGround && !this.player.anims.isPlaying)
@@ -121,7 +121,7 @@ gameScene.update = function () {
 
     // set default frame
     if (onGround)
-      this.player.setFrame(3);
+      this.player.setFrame(10);
   }
 
   // handle jumping
@@ -133,7 +133,7 @@ gameScene.update = function () {
     this.player.anims.stop('walking');
 
     // change frame
-    this.player.setFrame(2);
+    this.player.setFrame(42);
   }
 };
 
